@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Custom Role · 4 人合集洞察報告（結論導向版）</title>
+    <style>
+      :root {
+        --green: #00a651;
+        --lime: #b8e94b;
+        --lime-dark: #8fbe2f;
+        --green-soft: #e8f6ee;
+        --green-dark: #007a3d;
+        --bg: #f3f4f1;
+        --surface: #ffffff;
+        --surface-2: #fafaf7;
+        --ink: #0f1419;
+        --ink-2: #2b3340;
+        --ink-3: #4b5563;
+        --border: #e5e7eb;
+        --border-soft: #eef0ee;
+        --danger: #e11d48;
+        --danger-soft: #ffe4e6;
+        --warn: #d97706;
+        --warn-soft: #fef3c7;
+        --info: #2563eb;
+        --info-soft: #dbeafe;
+        --purple: #7c3aed;
+        --purple-soft: #ede9fe;
+        --radius: 16px;
+        --radius-lg: 22px;
+        --radius-pill: 999px;
+        --shadow-card: 0 1px 0 rgba(255,255,255,0.5) inset, 0 1px 3px rgba(0,0,0,0.04), 0 12px 28px -8px rgba(15,23,42,0.06);
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Inter", "PingFang TC", "Microsoft JhengHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 15px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      .deck { max-width: 1120px; margin: 0 auto; padding: 32px 24px 80px; }
+      .slide {
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        padding: 40px;
+        margin-bottom: 24px;
+        box-shadow: var(--shadow-card);
+        border: 1px solid var(--border-soft);
+      }
+      .slide-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+      .slide-title { font-size: 24px; font-weight: 600; margin: 0; letter-spacing: -0.015em; line-height: 1.3; }
+      .slide-title b, .slide-title strong { font-weight: 800; }
+      .slide-subtitle { font-size: 14px; color: var(--ink-3); margin: 8px 0 0; line-height: 1.5; font-weight: 400; }
+      .slide-no { font-size: 13px; font-weight: 600; color: var(--ink-3); letter-spacing: 0.06em; text-transform: uppercase; }
+
+      /* COVER */
+      .cover {
+        background: radial-gradient(circle at 85% 15%, rgba(184, 233, 75, 0.35), transparent 50%), radial-gradient(circle at 15% 85%, rgba(186, 230, 253, 0.45), transparent 45%), linear-gradient(135deg, #eaf3e3 0%, #f0f8e1 45%, #e8f4f8 100%);
+        padding: 56px 48px 48px; border: 1px solid var(--border-soft); position: relative; overflow: hidden;
+      }
+      .cover > * { position: relative; z-index: 1; }
+      .cover .eyebrow { display: inline-block; font-size: 13px; letter-spacing: 0.16em; font-weight: 600; color: var(--green-dark); padding: 6px 14px; background: rgba(255, 255, 255, 0.7); border-radius: var(--radius-pill); margin-bottom: 24px; border: 1px solid rgba(0, 122, 61, 0.18); }
+      .cover h1 { font-size: 38px; font-weight: 500; margin: 0 0 10px; letter-spacing: -0.025em; line-height: 1.2; }
+      .cover h1 b, .cover h1 strong { font-weight: 800; }
+      .cover h2 { font-size: 17px; font-weight: 400; margin: 0; color: var(--ink-2); line-height: 1.5; }
+
+      /* TL;DR */
+      .tldr { background: var(--green-soft); padding: 26px 30px; border-radius: var(--radius); }
+      .tldr p { margin: 0 0 10px; color: var(--green-dark); font-weight: 500; font-size: 15px; line-height: 1.8; }
+      .tldr p:last-child { margin-bottom: 0; }
+      .tldr b { font-weight: 800; }
+
+      /* KPI */
+      .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 24px; }
+      .kpi-hero { position: relative; padding: 24px 24px 22px; background: var(--surface-2); border-radius: var(--radius-lg); border: 1px solid transparent; min-height: 190px; display: flex; flex-direction: column; }
+      .kpi-hero.tint-red { background: #fef3f3; }
+      .kpi-hero.tint-lime { background: #f0f8e1; }
+      .kpi-hero.tint-amber { background: #fef6e7; }
+      .kpi-hero.tint-blue { background: #eef3fc; }
+      .kpi-hero .kpi-cat { font-size: 14px; font-weight: 700; color: var(--ink-2); letter-spacing: -0.01em; }
+      .kpi-hero .kpi-num { font-size: 46px; font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); margin: 8px 0 10px; }
+      .kpi-hero .kpi-num-unit { font-size: 20px; font-weight: 500; color: var(--ink-3); margin-left: 4px; }
+      .kpi-hero .kpi-statement { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.5; margin: 0; }
+
+      /* ACTION LIST */
+      .action-tier-title { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 800; margin: 28px 0 12px; color: var(--ink); }
+      .action-tier-title:first-child { margin-top: 0; }
+      .action-tier-title .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+      .action-tier-title.p0 .dot { background: var(--danger); }
+      .action-tier-title.p1 .dot { background: var(--warn); }
+      .action-tier-title.p2 .dot { background: var(--info); }
+      .action-tier-note { font-weight: 400; color: var(--ink-3); font-size: 13px; }
+      .action-list { display: grid; gap: 8px; margin-bottom: 6px; }
+      .action-item { background: var(--surface-2); border-radius: 12px; padding: 14px 18px; border: 1px solid var(--border-soft); }
+      .action-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 9px; align-items: center; }
+      .action-meta { font-size: 12px; color: var(--ink-3); font-weight: 600; }
+      .action-line { font-size: 14px; color: var(--ink-2); line-height: 1.7; margin: 0 0 5px; }
+      .action-line:last-child { margin-bottom: 0; }
+      .action-line b { font-weight: 700; color: var(--ink); }
+      .action-line .line-label {
+        display: inline-flex; align-items: center; gap: 5px; font-weight: 800; font-size: 12px;
+        letter-spacing: 0.02em; color: var(--ink-3); margin-right: 4px;
+      }
+      .action-line .line-label::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3); flex-shrink: 0; }
+      .action-line.reco .line-label { color: var(--green-dark); }
+      .action-line.reco .line-label::before { background: var(--green-dark); }
+
+      .meta-chip { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: var(--radius-pill); background: var(--surface); border: 1px solid var(--border); color: var(--ink-2); }
+      .meta-chip b { color: var(--ink); margin-right: 4px; font-weight: 700; }
+      .severity-pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; border: none; }
+      .pill-p0 { background: var(--danger); color: #fff; }
+      .pill-p1 { background: var(--warn); color: #fff; }
+      .pill-p2 { background: var(--info); color: #fff; }
+      .tag-spec-pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; border: none; }
+      .tag-pill-spec { background: #fee2e2; color: #b91c1c; }
+      .tag-pill-ux { background: #dbeafe; color: #1e40af; }
+      .tag-pill-both { background: #ede9fe; color: #6d28d9; }
+      .tag-pill-quant { background: #f3f4f6; color: var(--ink-3); }
+
+      /* Collapsible outer sections */
+      .collapse-block { border-radius: var(--radius-lg); border: 1px solid var(--border); overflow: hidden; margin-bottom: 16px; }
+      .collapse-block > summary {
+        list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px;
+        padding: 16px 20px; background: var(--surface-2); font-size: 15px; font-weight: 700; color: var(--ink);
+      }
+      .collapse-block > summary::-webkit-details-marker { display: none; }
+      .collapse-block > summary .chev { transition: transform 0.2s ease; color: var(--ink-3); flex-shrink: 0; }
+      .collapse-block[open] > summary .chev { transform: rotate(180deg); }
+      .collapse-block > summary .hint { font-weight: 400; color: var(--ink-3); font-size: 13px; margin-left: auto; }
+      .collapse-body { padding: 24px 24px 8px; }
+
+      /* PAIN GROUPS (reused inside collapsed detail) */
+      .pain-group { background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 22px 24px 18px; margin-bottom: 18px; }
+      .pain-group.g-vmr { background: #fef3f3; }
+      .pain-group.g-cat { background: #fef6e7; }
+      .pain-group.g-ui  { background: #eef3fc; }
+      .pain-group-header { display: flex; align-items: baseline; flex-wrap: wrap; column-gap: 12px; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(15, 20, 25, 0.08); }
+      .pain-group-header > p { flex-basis: 100%; flex-shrink: 0; margin-top: 4px !important; }
+      .pain-group-title-wrap { display: flex; align-items: baseline; gap: 14px; }
+      .pain-group-num { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: var(--ink); }
+      .pain-group.g-vmr .pain-group-num { color: var(--danger); }
+      .pain-group.g-cat .pain-group-num { color: var(--warn); }
+      .pain-group.g-ui  .pain-group-num { color: var(--info); }
+      .pain-group-title { font-size: 17px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+      .pain-group-count { font-size: 13px; font-weight: 600; padding: 4px 11px; border-radius: var(--radius-pill); background: rgba(255, 255, 255, 0.7); color: var(--ink-2); white-space: nowrap; }
+      .pain-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+      .pain-item { background: #fff; border-radius: 10px; overflow: hidden; }
+      .pain-item > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto 1fr; column-gap: 12px; row-gap: 8px; align-items: start; padding: 14px 14px 14px 12px; }
+      .pain-item .pain-toggle { grid-column: 1; grid-row: 1; margin-top: 2px; }
+      .pain-item .pain-text { grid-column: 2; grid-row: 1; }
+      .pain-item .pain-pills { grid-column: 2; grid-row: 2; justify-content: flex-start; }
+      .pain-item > summary::-webkit-details-marker { display: none; }
+      .pain-item > summary:hover { background: #fafaf7; }
+      .pain-item .pain-toggle { width: 20px; height: 20px; color: var(--ink-2); display: inline-flex; align-items: center; justify-content: center; transition: transform 0.2s ease; flex-shrink: 0; }
+      .pain-item .pain-toggle svg { width: 20px; height: 20px; display: block; }
+      .pain-item[open] .pain-toggle { transform: rotate(180deg); }
+      .pain-text { font-size: 15px; font-weight: 600; color: var(--ink); line-height: 1.45; }
+      .pain-pills { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+      .pain-detail { padding: 4px 18px 18px 44px; background: #fff; font-size: 14px; color: var(--ink-2); line-height: 1.65; border-top: 1px solid var(--border-soft); }
+      .pain-detail .pain-meta { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0 0; }
+      .pain-detail .pain-meta .meta-chip { font-size: 13px; padding: 4px 10px; }
+      .pain-detail .context-block, .pain-detail .ev-block, .pain-detail .reco-block { margin-top: 14px; }
+      .pain-detail strong, .context-block strong { font-weight: 600; background: linear-gradient(180deg, transparent 62%, rgba(184, 233, 75, 0.55) 62%); padding: 0 2px; color: var(--ink); }
+      .pp { display: inline-block; font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: var(--radius-pill); }
+      .pp.bill   { background: #d6f5b5; color: #2d4a0d; }
+      .pp.george { background: #cfe2fd; color: #1e3a6f; }
+      .pp.hsinbo { background: #fde7b8; color: #6b3f00; }
+      .pp.melen  { background: #e2d5fa; color: #3f1e7a; }
+      .context-block { background: #fff; padding: 14px 16px; border-radius: 10px; margin: 0 0 14px; font-size: 14px; color: var(--ink-2); line-height: 1.7; }
+      .context-label { font-size: 13px; font-weight: 700; color: var(--purple); letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+      .ev-block { margin: 0 0 14px; background: #fff; padding: 16px 18px; border-radius: var(--radius); border: 1px dashed var(--border); }
+      .ev-label { font-size: 13px; font-weight: 700; color: var(--green-dark); letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 10px; }
+      .ev-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+      .ev-list li { padding: 11px 14px; background: var(--surface-2); border-radius: 10px; font-size: 13px; color: var(--ink-2); line-height: 1.6; }
+      .ev-list li b { color: var(--ink); }
+      .ev-list li.q::before { content: "\201C"; color: var(--ink-3); font-size: 24px; line-height: 0; margin-right: 2px; vertical-align: -6px; font-family: Georgia, serif; }
+      .ev-quote-who { font-size: 13px; font-weight: 600; color: var(--ink-3); margin-left: 4px; white-space: nowrap; }
+      .ev-quote-who::before { content: "\2014 "; }
+      .reco-block { margin-top: 14px; background: #fff; padding: 14px 16px; border-radius: var(--radius); border: 1px dashed var(--border); }
+      .reco-block .reco-label { font-size: 13px; font-weight: 700; color: var(--green-dark); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+      .reco-block ul { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.7; color: var(--ink-2); }
+      .reco-block ul li b { color: var(--ink); }
+
+      /* Methodology / credibility (collapsed) */
+      .scope-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px; }
+      .scope-card { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; padding: 20px 22px; background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: var(--radius); }
+      .scope-num { font-size: 40px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; color: var(--ink); }
+      .scope-label { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+      .scope-sub { font-size: 14px; color: var(--ink-3); font-weight: 500; line-height: 1.55; }
+      .cred-block { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+      .cred-card { border-radius: var(--radius); padding: 20px 22px; border: 1px solid transparent; }
+      .cred-card.type-participant { background: #f0f4ff; border-color: #c7d7f8; }
+      .cred-card.type-task { background: #fff7ed; border-color: #fbd5a5; }
+      .cred-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 7px; }
+      .cred-card.type-participant .cred-eyebrow { color: #2251b8; }
+      .cred-card.type-task .cred-eyebrow { color: #b45309; }
+      .cred-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+      .cred-card h4 { margin: 0 0 10px; font-size: 15px; font-weight: 700; line-height: 1.4; letter-spacing: -0.01em; color: var(--ink); }
+      .src-list { list-style: none; padding: 0; margin: 0; }
+      .src-list li { padding: 10px 0; border-bottom: 1px solid var(--border-soft); font-size: 13px; color: var(--ink-2); }
+      .src-list li:last-child { border-bottom: none; }
+      .src-list li b { color: var(--ink); margin-right: 8px; }
+
+      .deck-footer { text-align: center; font-size: 13px; color: var(--ink-3); margin-top: 24px; }
+
+      @media (max-width: 800px) {
+        .kpi-grid, .scope-grid, .cred-block { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 600px) {
+        .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck">
+
+      <!-- COVER -->
+      <div class="slide cover">
+        <div class="eyebrow">Custom Role · Consolidated Usability Insights（結論導向版）</div>
+        <h1><strong>NCC Custom Role Prototype 測試結論與待改事項</strong></h1>
+        <h2>IT × CSO 實測 4 人 · 確認現有規格能否支援 MRD 客戶的實際操作需求</h2>
+      </div>
+
+      <!-- CONCLUSION + KPI -->
+      <div class="slide">
+        <div class="slide-header">
+          <div>
+            <h2 class="slide-title">結論</h2>
+            <p class="slide-subtitle">測試結果顯示，現在的規格跟客戶實際的操作需求還有落差，以下是主要發現</p>
+          </div>
+          <div class="slide-no">01</div>
+        </div>
+
+        <div class="tldr">
+          <p>✦ 4 位受測者一開始都看不出來「<b>執行(Run)</b>」這個權限是用來做什麼的，也因此讓後面的操作更容易卡關。</p>
+          <p>✦ 套用現在的預設範本（Viewer / Admin）容易多帶入用戶不需要的<b>權限</b>——不是不該用範本，是範本的內容要更貼近客戶的實際需求來設計。</p>
+          <p>✦ 情境 2、3 是真實客戶會遇到的需求（來自 MRD），測試結果顯示<b>現在的規格還沒辦法讓使用者順利完成這兩個任務</b>，建議在確認規格前先修正。</p>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-hero tint-red">
+            <div class="kpi-cat">不清楚 Run 權限概念</div>
+            <div class="kpi-num">100<span class="kpi-num-unit">%</span></div>
+            <p class="kpi-statement">受測者都不確定 Run 代表的意義</p>
+          </div>
+          <div class="kpi-hero tint-amber">
+            <div class="kpi-cat">分類難以理解</div>
+            <div class="kpi-num">75<span class="kpi-num-unit">%</span></div>
+            <p class="kpi-statement">受測者找不到功能該放在哪個分類</p>
+          </div>
+          <div class="kpi-hero tint-lime">
+            <div class="kpi-cat">V / M / R 連動期待</div>
+            <div class="kpi-num">75<span class="kpi-num-unit">%</span></div>
+            <p class="kpi-statement">受測者對不同層級的權限有連動期待</p>
+          </div>
+          <div class="kpi-hero tint-blue">
+            <div class="kpi-cat">範本過度授權</div>
+            <div class="kpi-num">~131<span class="kpi-num-unit">個</span></div>
+            <p class="kpi-statement">Viewer 範本平均多帶入的不需要權限（精準度僅 8.4%）</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTION LIST -->
+      <div class="slide">
+        <div class="slide-header">
+          <div>
+            <h2 class="slide-title">要改什麼</h2>
+            <p class="slide-subtitle">11 項待改事項，依嚴重度排序；標示 Spec（需改規格）／ UX（僅需調整介面）／ Spec+UX（兩者皆需）</p>
+          </div>
+          <div class="slide-no">02</div>
+        </div>
+
+        <div class="action-tier-title p0"><span class="dot"></span>P0 · 現在就要決定<span class="action-tier-note">阻斷理解或有實質資安風險</span></div>
+        <div class="action-list">
+          <div class="action-item p0">
+            <div class="action-badges"><span class="severity-pill pill-p0">P0</span><span class="tag-spec-pill tag-pill-spec">Spec</span><span class="action-meta">V/M/R · 命中 100%</span></div>
+            <p class="action-line"><span class="line-label">問題</span>「執行(Run)」的定義與涵蓋範圍不明確，使用者無法建立正確的心智模型</p>
+            <p class="action-line reco"><span class="line-label">建議</span>在規格中界定清楚 Run 的邊界，直接對應 NCC 既有的「Live tool」概念，降低學習成本</p>
+          </div>
+          <div class="action-item p0">
+            <div class="action-badges"><span class="severity-pill pill-p0">P0</span><span class="tag-spec-pill tag-pill-spec">Spec</span><span class="action-meta">V/M/R · 命中 100%</span></div>
+            <p class="action-line"><span class="line-label">問題</span>檢視／修改／執行三者沒有連動，使用者能勾出矛盾組合（例如只給執行、不給檢視）</p>
+            <p class="action-line reco"><span class="line-label">建議</span>改為階層式包含（勾「修改」自動含「檢視」），並禁用無意義的組合</p>
+          </div>
+          <div class="action-item p0">
+            <div class="action-badges"><span class="severity-pill pill-p0">P0</span><span class="tag-spec-pill tag-pill-both">Spec+UX</span><span class="action-meta">範本 · 命中 100%</span></div>
+            <p class="action-line"><span class="line-label">問題</span>預設範本（Viewer/Admin）是系統層級劃分，套用後平均多帶入 <b>131 個不需要的權限、精準度僅 8.4%</b>，有過度授權風險</p>
+            <p class="action-line reco"><span class="line-label">建議</span>改以任務／職能設計專屬範本（如第一線支援、WiFi 管理員），套用前後提供預覽與差異提示</p>
+          </div>
+        </div>
+
+        <div class="action-tier-title p1"><span class="dot"></span>P1 · 明顯影響任務完成度<span class="action-tier-note">造成延誤、誤判或重複勞動</span></div>
+        <div class="action-list">
+          <div class="action-item p1">
+            <div class="action-badges"><span class="severity-pill pill-p1">P1</span><span class="tag-spec-pill tag-pill-ux">UX</span><span class="action-meta">V/M/R · 命中 50%</span></div>
+            <p class="action-line"><span class="line-label">問題</span>沒有可執行動作的頁面仍會顯示「執行」欄位，使用者需額外判斷該欄位是否適用</p>
+            <p class="action-line reco"><span class="line-label">建議</span>依權限實際能力動態隱藏／顯示欄位</p>
+          </div>
+          <div class="action-item p1">
+            <div class="action-badges"><span class="severity-pill pill-p1">P1</span><span class="tag-spec-pill tag-pill-spec">Spec</span><span class="action-meta">分類 · 命中 100%</span></div>
+            <p class="action-line"><span class="line-label">問題</span>功能分類位置與使用者直覺不符（如 Topology 被歸在設定類，使用者以為該在監控類）</p>
+            <p class="action-line reco"><span class="line-label">建議</span>依使用者熟悉的操作路徑重新規劃分類，命名避免情境化用詞（如「Fault」）</p>
+          </div>
+          <div class="action-item p1">
+            <div class="action-badges"><span class="severity-pill pill-p1">P1</span><span class="tag-spec-pill tag-pill-spec">Spec</span><span class="action-meta">分類 · 命中 75%</span></div>
+            <p class="action-line"><span class="line-label">問題</span>單一分類展開後可達 24 個以上項目，多數人直接全選再刪</p>
+            <p class="action-line reco"><span class="line-label">建議</span>盤點所有子項，合併「永遠綁在一起」的細項，減少清單長度</p>
+          </div>
+          <div class="action-item p1">
+            <div class="action-badges"><span class="severity-pill pill-p1">P1</span><span class="tag-spec-pill tag-pill-both">Spec+UX</span><span class="action-meta">分類 · 命中 50%</span></div>
+            <p class="action-line"><span class="line-label">問題</span>有主從關係的權限（如韌體管理 vs 立即升級）沒有標示依賴，勾了子項卻進不去頁面</p>
+            <p class="action-line reco"><span class="line-label">建議</span>在規格中宣告依賴關係，UI 以縮排或提示呈現</p>
+          </div>
+          <div class="action-item p1">
+            <div class="action-badges"><span class="severity-pill pill-p1">P1</span><span class="tag-spec-pill tag-pill-ux">UX</span><span class="action-meta">UI · 命中 100%</span></div>
+            <p class="action-line"><span class="line-label">問題</span>「重設權限」按鈕放在範本區旁，容易被誤認為只清空範本</p>
+            <p class="action-line reco"><span class="line-label">建議</span>移至權限清單區、改名為更直白的字眼，並加上確認對話框</p>
+          </div>
+          <div class="action-item p1">
+            <div class="action-badges"><span class="severity-pill pill-p1">P1</span><span class="tag-spec-pill tag-pill-ux">UX</span><span class="action-meta">UI · 命中 75%</span></div>
+            <p class="action-line"><span class="line-label">問題</span>分類沒有整批勾選／取消功能，只能逐項點擊</p>
+            <p class="action-line reco"><span class="line-label">建議</span>每個分類加上全選／取消／反選的批次操作</p>
+          </div>
+        </div>
+
+        <div class="action-tier-title p2"><span class="dot"></span>P2 · 可排入後續優化<span class="action-tier-note">造成困惑但不阻斷任務</span></div>
+        <div class="action-list">
+          <div class="action-item p2">
+            <div class="action-badges"><span class="severity-pill pill-p2">P2</span><span class="tag-spec-pill tag-pill-ux">UX</span><span class="action-meta">UI · 命中 50%</span></div>
+            <p class="action-line"><span class="line-label">問題</span>選擇範本後清單不會立即更新，還要多按一次「Import」</p>
+            <p class="action-line reco"><span class="line-label">建議</span>選擇當下就直接套用，移除多餘步驟</p>
+          </div>
+          <div class="action-item p2">
+            <div class="action-badges"><span class="severity-pill pill-p2">P2</span><span class="tag-spec-pill tag-pill-ux">UX</span><span class="action-meta">UI · 命中 50%</span></div>
+            <p class="action-line"><span class="line-label">問題</span>「Show Config Only」功能定位讓人誤解（以為是跟範本比對差異）</p>
+            <p class="action-line reco"><span class="line-label">建議</span>改用篩選器視覺樣式、更貼切的命名，並把曝光時機移到編輯階段而非初次設定</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLLAPSED: detailed evidence -->
+      <details class="collapse-block">
+        <summary>
+          <svg class="chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          查看每項問題的完整依據（情境描述、逐字證據、詳細建議）
+          <span class="hint">給需要查證細節的人 · 預設收合</span>
+        </summary>
+        <div class="collapse-body">
+
+          <!-- Group 1: V/M/R -->
+          <div class="pain-group g-vmr">
+            <div class="pain-group-header">
+              <div class="pain-group-title-wrap">
+                <span class="pain-group-num">1</span>
+                <span class="pain-group-title">V / M / R 權限定義與連動關係</span>
+              </div>
+              <span class="pain-group-count">3 個痛點</span>
+              <p style="font-size: 14px; color: var(--ink-2); line-height: 1.7; margin: 10px 0 0; width: 100%;">受測者對 V / M / R 的定義與連動方式感到困惑，多數人期待勾選較高的權限時，較低的權限應該自動被包含進來。</p>
+            </div>
+            <div class="pain-list">
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">權限的定義與心智模型不明，尤其對「Run」疑惑</span>
+                  <div class="pain-pills"><span class="pp bill">IT-1</span><span class="pp george">IT-2</span><span class="pp hsinbo">CSO-1</span><span class="pp melen">CSO-2</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip"><b>命中</b>100%</span><span class="severity-pill pill-p0">P0</span><span class="tag-spec-pill tag-pill-spec">Spec</span></div>
+                  <div class="context-block">
+                    <span class="context-label">情境 / Context</span>
+                    受測者大概可以猜到 View=看、Modify=可修改，可理解 Run 代表「執行」，但<strong>不清楚為什麼需要將「修改設定 (Modify)」與「執行動作 (Run)」拆分得如此細碎</strong>。<strong>他們認為這兩者是高度重疊的</strong>。加上實際操作中 <strong>Run 的語意在不同頁面又不一致</strong>：在 Topology 上是「產 PDF」、在 Device 內頁是「Live tool / Reboot」、在某些設定頁卻又看不到對應動作。整個任務過程都被「Run 到底代表什麼」干擾，並讓使用者開始懷疑自己對整套權限模型的理解。
+                  </div>
+                  <div class="ev-block">
+                    <span class="ev-label">證據 · Evidence</span>
+                    <ul class="ev-list">
+                      <li class="q">Modify 有包含 Run，所以會根據功能同時勾選 Modify 跟 Run。<span class="ev-quote-who">IT-1</span></li>
+                      <li class="q">Modify 完之後可不可以執行它，又獨立拆開來那也很刻意 — 明明就是連貫動作。<span class="ev-quote-who">CSO-2</span></li>
+                      <li class="q">無法理解 Run 的意思，因為 NCC 上都是 Monitor 跟 Config。<span class="ev-quote-who">CSO-2</span></li>
+                      <li><b>問卷 Q4：</b>4 人對 Run 的一句話描述全都不同（執行 / 可執行操作按鈕 / Live tool / ?）。</li>
+                    </ul>
+                  </div>
+                  <div class="reco-block">
+                    <div class="reco-label">建議 · recommendation</div>
+                    <ul>
+                      <li><b>Spec 層級</b>：先釐清 Run 範圍邊界（物件層級執行？頁面層級 Live tool 集合？）寫進 PRD。</li>
+                      <li><b>對齊 Live tool</b>：考慮把 Run 直接映射為「Live tool / Execute」，回到 NCC 既有世界觀（Monitor / Config / Live tool）— CSO-1 訪談中本能地以 Live tool 解釋 Run，這條路徑學習成本最低。</li>
+                      <li><b>無執行物件頁面隱藏 Run 欄位</b>：避免使用者陷入猜謎迴圈。</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">View / Modify / Run 連動關係不明</span>
+                  <div class="pain-pills"><span class="pp bill">IT-1</span><span class="pp george">IT-2</span><span class="pp hsinbo">CSO-1</span><span class="pp melen">CSO-2</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip"><b>命中</b>100%</span><span class="severity-pill pill-p0">P0</span><span class="tag-spec-pill tag-pill-spec">Spec</span></div>
+                  <div class="context-block">
+                    <span class="context-label">情境 / Context</span>
+                    在多個情境（特別是情境 1、2）受測者面對 View / Modify / Run 三欄勾選時，會猶豫該勾哪一個，常見的處理是「不確定就三個都勾」。當意識到實際上有「只勾 Run 但 View 是 disable」這種組合時，受測者會明顯困惑：<strong>「沒辦法 View 怎麼 Run？」</strong>這個 mental model 衝突在每次切換 permission 都會再次出現，是累積性的疲勞。
+                  </div>
+                  <div class="ev-block">
+                    <span class="ev-label">證據 · Evidence</span>
+                    <ul class="ev-list">
+                      <li class="q">如果系統一定要 View 才能 Modify，那我應該就不能取消勾選 View — 不然就是系統設計錯誤。<span class="ev-quote-who">IT-2</span></li>
+                      <li class="q">View &lt; Modify &lt; Run，選 Run 要帶有下兩階的權限，以此類推。<span class="ev-quote-who">CSO-2</span></li>
+                      <li><b>問卷 Q6：</b>75% 明確選「應該自動連動」，其餘 25%（IT-2）選「若有連動關係就該自動勾」— 沒有人認為三者應完全獨立。</li>
+                    </ul>
+                  </div>
+                  <div class="reco-block">
+                    <div class="reco-label">建議 · recommendation</div>
+                    <ul>
+                      <li><b>產品決策三選一</b>：(A) 維持三者獨立 / (B) 階層包含（View ⊆ Modify ⊆ Run）/ (C) 各自獨立但 UI 強制連動。<b>建議採 B</b>，貼近 IT 既有 NTFS / AD 心智模型。</li>
+                      <li><b>若維持獨立</b>：必須在介面上明確標示「三者獨立」說明，並用 tooltip 或 helper 文案教育。</li>
+                      <li><b>禁用無效組合</b>：勾 Run 時自動勾 View 並 disable，而不是放任使用者勾出無意義組合。</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">Run 出現在「無可執行物件」頁面引發困惑</span>
+                  <div class="pain-pills"><span class="pp hsinbo">CSO-1</span><span class="pp melen">CSO-2</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip"><b>命中</b>50%</span><span class="severity-pill pill-p1">P1</span><span class="tag-spec-pill tag-pill-both">Spec+UX</span></div>
+                  <div class="context-block">
+                    <span class="context-label">情境 / Context</span>
+                    在所有情境中受測者掃過 Permission 清單時，會遇到一些 permission（如 AP post setting）對應的實際頁面沒有 Live tool / 沒有可執行按鈕，但介面仍會強制顯示 Run 欄位。CSO-1 在情境 2 中明確掉入<strong>「這頁應該沒有東西可以執行才對，但這裡有 Run 選項，所以 Run 一定是有什麼我不知道的能力」</strong>的認知迴圈。這種無意義欄位會讓使用者反覆懷疑自己對整套權限模型的理解。
+                  </div>
+                  <div class="ev-block">
+                    <span class="ev-label">證據 · Evidence</span>
+                    <ul class="ev-list">
+                      <li class="q">這一頁就覺得沒有 Run，所以它長一個 Run 的選項就會覺得很突兀，所以就會開始掉到那個迴圈裡面 — Run 到底是什麼？<span class="ev-quote-who">CSO-1</span></li>
+                      <li class="q">Event log 有些行為（像是 Search 特定 log）到底算 Run 還是 View？<span class="ev-quote-who">CSO-2</span></li>
+                    </ul>
+                  </div>
+                  <div class="reco-block">
+                    <div class="reco-label">建議 · recommendation</div>
+                    <ul>
+                      <li><b>動態欄位顯示</b>：依該 permission 的能力範圍動態顯示 / 隱藏 View / Modify / Run；沒有 Run 能力者直接 N/A 或不顯示。</li>
+                      <li><b>欄位明示</b>：欄位 hover 顯示「此 permission 提供哪些動作」tooltip，讓使用者一眼判斷需要什麼層級。</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <!-- Group 2: Category -->
+          <div class="pain-group g-cat">
+            <div class="pain-group-header">
+              <div class="pain-group-title-wrap">
+                <span class="pain-group-num">2</span>
+                <span class="pain-group-title">Category 的分類邏輯</span>
+              </div>
+              <span class="pain-group-count">3 個痛點</span>
+              <p style="font-size: 14px; color: var(--ink-2); line-height: 1.7; margin: 10px 0 0; width: 100%;">受測者在尋找特定功能時，常因分類位置不符預期而找錯地方或放棄。分類邏輯與命名方式與使用者慣用的操作路徑存在落差。</p>
+            </div>
+            <div class="pain-list">
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">部分功能的分類位置與使用者預期不符</span>
+                  <div class="pain-pills"><span class="pp bill">IT-1</span><span class="pp george">IT-2</span><span class="pp hsinbo">CSO-1</span><span class="pp melen">CSO-2</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip"><b>命中</b>100%</span><span class="severity-pill pill-p1">P1</span><span class="tag-spec-pill tag-pill-spec">Spec</span></div>
+                  <div class="context-block">
+                    <span class="context-label">情境 / Context</span>
+                    多位受測者找不到預期中的功能位置：<strong>Topology</strong> 被放在 Configuration 分類下，但受測者預期應在 Performance 或 Fault Management（監控相關）。<strong>Vouchers / Cloud Auth</strong> 被放在 Security Mgmt，但受測者認為這些與設定流程相關，應在 Configuration。這類落差反映分類邏輯與使用者操作路徑的不一致，導致需花時間翻找功能。
+                  </div>
+                  <div class="ev-block">
+                    <span class="ev-label">證據 · Evidence</span>
+                    <ul class="ev-list">
+                      <li>IT-1：找 Topology 時先進 Configuration，沒找到後才往其他分類嘗試</li>
+                      <li>CSO-1：預期 Vouchers 應跟 SSID 設定在同一個區域</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">功能項目分類過多且細碎，大多數人傾向到第二層就批次選取</span>
+                  <div class="pain-pills"><span class="pp bill">IT-1</span><span class="pp george">IT-2</span><span class="pp hsinbo">CSO-1</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip"><b>命中</b>75%</span><span class="severity-pill pill-p1">P1</span><span class="tag-spec-pill tag-pill-spec">Spec</span></div>
+                  <div class="context-block">
+                    <span class="context-label">情境 / Context</span>
+                    目前的功能項目分類層數多、數量龐大（<strong>單一 category 展開後可達 24+ items</strong>）。受測者實際操作時，<strong>大多數人大概到第二層就會傾向批次選取整個分類</strong>，而非逐項閱讀。細碎的項目設計不符合實際操作邏輯，同時也使 template 套用後的調整成本更高。
+                  </div>
+                  <div class="ev-block">
+                    <span class="ev-label">證據 · Evidence</span>
+                    <ul class="ev-list">
+                      <li class="q">這個清單太長…放棄閱讀。項目太細、大分類到六個也太多。<span class="ev-quote-who">IT-2</span></li>
+                      <li class="q">項目看起來蠻多蠻雜的…可能需要在一進來頁面的時候就讓使用者稍微知道哪些項目會在哪個分類下。<span class="ev-quote-who">CSO-1</span></li>
+                    </ul>
+                  </div>
+                  <div class="reco-block">
+                    <div class="reco-label">建議 · recommendation</div>
+                    <ul>
+                      <li><b>Spec 重審粒度</b>：audit 所有 sub-permissions，把功能上一定綁在一起的細項合併。</li>
+                      <li><b>去除「永遠連帶」的細項</b>：若某項權限沒有獨立勾選的合理場景，spec 端就不該讓它存在。</li>
+                      <li><b>UI 輔助</b>：在收合狀態顯示子項數量 chip，讓使用者建立規模感。</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">子母權限關係（Firmware mgmt vs Upgrade now）不明</span>
+                  <div class="pain-pills"><span class="pp hsinbo">CSO-1</span><span class="pp melen">CSO-2</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip"><b>命中</b>50%</span><span class="severity-pill pill-p1">P1</span><span class="tag-spec-pill tag-pill-both">Spec+UX</span></div>
+                  <div class="context-block">
+                    <span class="context-label">情境 / Context</span>
+                    受測者在 NCC 主介面已建立「Firmware management 子頁面包含 upgrade」的心智模型；但<strong>在 Permission 清單中這些被條列在不同位置，且沒有顯示依賴關係</strong>。當使用者單獨勾 Upgrade now、沒勾 Firmware mgmt 時，<strong>實際上是無法進入該頁面的，但介面沒有任何提示</strong>。
+                  </div>
+                  <div class="ev-block">
+                    <span class="ev-label">證據 · Evidence</span>
+                    <ul class="ev-list">
+                      <li class="q">Firmware management 跟 Firmware upgrade now 不明白為什麼要分開，若沒有勾 Firmware management 時勾 Firmware upgrade now 也沒有意義，進不去頁面。<span class="ev-quote-who">CSO-2</span></li>
+                      <li class="q">VPN connection 在 NCC 有子母層關係，但在 permission 清單看不出來關聯性。<span class="ev-quote-who">CSO-1</span></li>
+                    </ul>
+                  </div>
+                  <div class="reco-block">
+                    <div class="reco-label">建議 · recommendation</div>
+                    <ul>
+                      <li><b>權限依賴明確化</b>：宣告每個 permission 的 prerequisite，UI 上以縮排、虛線或 prerequisite badge 表示。</li>
+                      <li><b>失效組合處理</b>：勾選沒有 prerequisite 的權限時 toast 提示，或自動連帶勾起。</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <!-- Group 3: Template -->
+          <div class="pain-group" style="background: #f5f3ff; border-color: #e0d9ff;">
+            <div class="pain-group-header">
+              <div class="pain-group-title-wrap">
+                <span class="pain-group-num" style="color: var(--purple);">3</span>
+                <span class="pain-group-title">Template 策略與過度授權風險</span>
+              </div>
+              <span class="pain-group-count">量化驗證組</span>
+              <p style="font-size: 14px; color: var(--ink-2); line-height: 1.7; margin: 10px 0 0; width: 100%;">受測者會主動使用 Template 作為起點，但現有預設範本並未針對客戶情境設計，套用後需花大量時間調整，也容易造成過度授權。</p>
+            </div>
+            <div class="pain-list">
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">現有預設範本屬於「系統層級」的劃分，與真實客戶需求分工「任務 / 職能層級」劃分存在落差</span>
+                  <div class="pain-pills"><span class="pp bill">IT-1</span><span class="pp george">IT-2</span><span class="pp hsinbo">CSO-1</span><span class="pp melen">CSO-2</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip"><b>命中</b>100%</span><span class="severity-pill pill-p0">P0</span><span class="tag-spec-pill tag-pill-both">Spec+UX</span></div>
+                  <div class="context-block">
+                    <span class="context-label">情境 / Context</span>
+                    目前系統提供的預設範本（Viewer、Admin）是以通用角色為基準設計，<strong>並未針對 MRD 中的新客戶需求重新調整</strong>。受測者套用後，面對大量已被帶入的不相關權限，<strong>不知道哪些需要移除、也不知道從哪裡開始</strong>，移除成本極高。情境 2 中使用 Viewer 的受測者平均帶入 131 個多餘權限，精準度僅 8.4%；情境 3 中使用 Admin 的 IT-1 需從 426 個中大量刪減至 43 個。<strong>在高壓或時間緊的情況下，使用者可能直接放棄修改，導致過度授權的資安風險</strong>。
+                  </div>
+                  <div class="ev-block">
+                    <span class="ev-label">量化證據 · Quantitative Evidence</span>
+                    <ul class="ev-list">
+                      <li><b>情境 2 · Viewer template：</b>平均命中率 75.0%，精準度 <b style="color:var(--danger)">8.4%</b>，平均額外帶入 <b style="color:var(--danger)">131 個</b>權限</li>
+                      <li><b>情境 3 · Admin template：</b>命中率 72.7%，精準度 93.0%，需從 426 個中大量刪減</li>
+                      <li><b>情境 3 · Wifi operation（情境化）：</b>命中率 <b style="color:var(--green-dark)">98.2%</b>，精準度 <b style="color:var(--green-dark)">95.2%</b>，接近零多選</li>
+                    </ul>
+                  </div>
+                  <div class="reco-block">
+                    <div class="reco-label">建議 · Recommendation</div>
+                    <ul>
+                      <li><b>套用前預覽</b>：顯示 template 包含的總權限數、各 category 摘要、適用情境說明。</li>
+                      <li><b>套用後 Diff 提示</b>：明確顯示「新增了哪些權限」「哪些 category 超出情境範圍」。</li>
+                      <li><b>情境化 Template</b>：以實際客戶需求為基準，建立更細粒度的 scenario-based template 取代通用 Admin / Viewer。</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">量化佐證：情境 3 — 同樣是範本，貼近客戶情境的設計能大幅提升命中度</span>
+                  <div class="pain-pills"><span class="pp bill">IT-1</span><span class="pp george">IT-2</span><span class="pp hsinbo">CSO-1</span><span class="pp melen">CSO-2</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip tag-pill-quant" style="border-radius:999px; padding:4px 10px;">量化佐證，非獨立問題</span></div>
+                  <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius); padding: 16px 18px;">
+                    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-dark); margin-bottom: 10px;">情境 3 · WiFi Admin（標準答案 55 個權限）</div>
+                    <table style="width:100%; font-size: 14px; border-collapse: collapse;">
+                      <thead><tr style="border-bottom: 1px solid rgba(0,0,0,0.08);"><th style="text-align:left; padding: 4px 6px; color: var(--ink-3); font-weight: 600;">Template</th><th style="text-align:right; padding: 4px 6px; color: var(--ink-3); font-weight: 600;">命中率</th><th style="text-align:right; padding: 4px 6px; color: var(--ink-3); font-weight: 600;">精準度</th><th style="text-align:right; padding: 4px 6px; color: var(--ink-3); font-weight: 600;">額外多選</th></tr></thead>
+                      <tbody>
+                        <tr style="border-bottom: 1px solid rgba(0,0,0,0.05);"><td style="padding: 6px; font-weight: 600; color: var(--warn);">Admin（預設範本）</td><td style="text-align:right; padding: 6px; color: var(--ink-2);">72.7%</td><td style="text-align:right; padding: 6px; color: var(--ink-2);">93.0%</td><td style="text-align:right; padding: 6px; color: var(--warn);">3 個</td></tr>
+                        <tr><td style="padding: 6px; font-weight: 600; color: var(--green-dark);">Wifi operation（情境化自訂）</td><td style="text-align:right; padding: 6px; color: var(--green-dark); font-weight: 700;">98.2% ↑</td><td style="text-align:right; padding: 6px; color: var(--green-dark); font-weight: 700;">95.2% ↑</td><td style="text-align:right; padding: 6px; color: var(--green-dark);">~3 個</td></tr>
+                      </tbody>
+                    </table>
+                    <div style="margin-top: 10px; font-size: 14px; color: #166534; background: rgba(255,255,255,0.8); border-radius: 8px; padding: 10px 12px; line-height: 1.65;">✅ 只要範本設計貼近客戶實際情境，命中率可達 98.2%、精準度 95.2%，套用後幾乎不需要額外調整。這驗證了：<b>不是「不要用範本」，而是「範本需要針對客戶需求重新設計」</b>。</div>
+                  </div>
+                </div>
+              </details>
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">量化佐證：情境 2 — 帶入範本雖然提升命中率，但精準度大幅下降</span>
+                  <div class="pain-pills"><span class="pp george">IT-2</span><span class="pp melen">CSO-2</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip tag-pill-quant" style="border-radius:999px; padding:4px 10px;">量化佐證，非獨立問題</span></div>
+                  <div style="background: #fef3f3; border: 1px solid #fecdd3; border-radius: var(--radius); padding: 16px 18px;">
+                    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--danger); margin-bottom: 10px;">情境 2 · 第一線技術支援人員（標準答案 16 個權限）</div>
+                    <table style="width:100%; font-size: 14px; border-collapse: collapse;">
+                      <thead><tr style="border-bottom: 1px solid rgba(0,0,0,0.08);"><th style="text-align:left; padding: 4px 6px; color: var(--ink-3); font-weight: 600;">Template</th><th style="text-align:right; padding: 4px 6px; color: var(--ink-3); font-weight: 600;">命中率</th><th style="text-align:right; padding: 4px 6px; color: var(--ink-3); font-weight: 600;">精準度</th><th style="text-align:right; padding: 4px 6px; color: var(--ink-3); font-weight: 600;">額外多選</th></tr></thead>
+                      <tbody>
+                        <tr style="border-bottom: 1px solid rgba(0,0,0,0.05);"><td style="padding: 6px; font-weight: 600; color: var(--ink);">未套用</td><td style="text-align:right; padding: 6px; color: var(--ink-2);">43.7%</td><td style="text-align:right; padding: 6px; color: var(--ink-2);">24.3%</td><td style="text-align:right; padding: 6px; color: var(--ink-2);">—</td></tr>
+                        <tr><td style="padding: 6px; font-weight: 600; color: var(--danger);">Viewer（預設範本）</td><td style="text-align:right; padding: 6px; color: var(--ink);">75.0% ↑</td><td style="text-align:right; padding: 6px; color: var(--danger); font-weight: 700;">8.4% ↓↓</td><td style="text-align:right; padding: 6px; color: var(--danger); font-weight: 700;">~131 個</td></tr>
+                      </tbody>
+                    </table>
+                    <div style="margin-top: 10px; font-size: 14px; color: #b91c1c; background: rgba(255,255,255,0.8); border-radius: 8px; padding: 10px 12px; line-height: 1.65;">⚠️ 套用 Viewer 範本後命中率從 43.7% 提升至 75%，看似改善——但精準度從 24.3% 驟降至 <b>8.4%</b>，平均帶入了 <b>131 個多餘權限</b>。</div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <!-- Group 4: UI -->
+          <div class="pain-group g-ui">
+            <div class="pain-group-header">
+              <div class="pain-group-title-wrap">
+                <span class="pain-group-num">4</span>
+                <span class="pain-group-title">UI 調整</span>
+              </div>
+              <span class="pain-group-count">4 個痛點</span>
+              <p style="font-size: 14px; color: var(--ink-2); line-height: 1.7; margin: 10px 0 0; width: 100%;">受測者在操作上遇到幾個具體卡點：缺少批次選取大分類的方式、套用 Template 後清單沒有立即更新、Reset 按鈕位置造成誤解、Show Config Only 的功能定位不符實際使用需求。</p>
+            </div>
+            <div class="pain-list">
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">Reset Permission 位置在 Template 區，被誤判為只清模板</span>
+                  <div class="pain-pills"><span class="pp bill">IT-1</span><span class="pp george">IT-2</span><span class="pp hsinbo">CSO-1</span><span class="pp melen">CSO-2</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip"><b>命中</b>100%</span><span class="severity-pill pill-p1">P1</span><span class="tag-spec-pill tag-pill-ux">UX</span></div>
+                  <div class="context-block">
+                    <span class="context-label">情境 / Context</span>
+                    情境 4「取消當前畫面所有權限設置」中，<strong>4 位受測者都找了一陣子才看到 Reset Permission</strong>，且就算看到了也猶豫「這個 reset 是不是只清模板」。原因是按鈕位置和 Template dropdown 在同一視覺區塊，造成錯誤聯想。IT-1 進一步表示按下後預期應該要有 confirm modal。
+                  </div>
+                  <div class="ev-block">
+                    <span class="ev-label">證據 · Evidence</span>
+                    <ul class="ev-list">
+                      <li class="q">Reset 出現在這一塊有點意外…這個對我來講是 Template，可是你這裡是 reset 是所有的權限。<span class="ev-quote-who">IT-2</span></li>
+                      <li class="q">我預期它應該會放在 Role Template Session 裡面，感覺好像它只是 Reset 那個 Role Template。<span class="ev-quote-who">CSO-1</span></li>
+                    </ul>
+                  </div>
+                  <div class="reco-block">
+                    <div class="reco-label">建議 · recommendation</div>
+                    <ul>
+                      <li><b>位置調整</b>：移到 Permission 清單區的右上角，與「Show config only」「Search」並列。</li>
+                      <li><b>確認對話框</b>：點擊後出現 confirm modal。</li>
+                      <li><b>命名加強</b>：改為「Clear All Permissions」更直白，並在 button 旁加圖示。</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">缺少大分類「全勾／全取消／反選」批次操作</span>
+                  <div class="pain-pills"><span class="pp bill">IT-1</span><span class="pp george">IT-2</span><span class="pp melen">CSO-2</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip"><b>命中</b>75%</span><span class="severity-pill pill-p1">P1</span><span class="tag-spec-pill tag-pill-ux">UX</span></div>
+                  <div class="context-block">
+                    <span class="context-label">情境 / Context</span>
+                    情境 1（為 Topology PDF 設權限）和情境 2（第一線技術支援人員）受測者都遇到「要對某個大分類做整批勾選 / 取消」的需求。受測者實際操作策略多半是<strong>「先全勾這類，再針對例外取消個別項」</strong>，但目前介面沒有大分類層級的批次操作，每次都要逐項點，相當疲勞。
+                  </div>
+                  <div class="ev-block">
+                    <span class="ev-label">證據 · Evidence</span>
+                    <ul class="ev-list">
+                      <li class="q">如果這邊有一個全勾跟群消／反選，就比較快。<span class="ev-quote-who">IT-2</span></li>
+                      <li class="q">會想找可以把整個大分類一次全部勾選的 checkbox。<span class="ev-quote-who">CSO-2</span></li>
+                    </ul>
+                  </div>
+                  <div class="reco-block">
+                    <div class="reco-label">建議 · recommendation</div>
+                    <ul>
+                      <li><b>每個 category header 加 master checkbox</b>（三態：all / partial / none）。</li>
+                      <li><b>支援反向選取</b>：每個 sub-feature row 提供「invert」快捷或 multi-select 後的 bulk action menu。</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">選取 Template 後，預期下方 Permission 清單應立即變化，但資料未馬上帶入</span>
+                  <div class="pain-pills"><span class="pp bill">IT-1</span><span class="pp hsinbo">CSO-1</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip"><b>命中</b>50%</span><span class="severity-pill pill-p2">P2</span><span class="tag-spec-pill tag-pill-ux">UX</span></div>
+                  <div class="context-block">
+                    <span class="context-label">情境 / Context</span>
+                    在情境 3 中，IT-1 和 CSO-1 從 dropdown 選取 Template 後，<strong>直覺預期下方的 Permission 清單應該立即更新</strong>。但實際上需要再按一個獨立的「Import」按鈕才能載入，這個額外步驟違反了 dropdown 選取即生效的一般互動預期。
+                  </div>
+                  <div class="ev-block">
+                    <span class="ev-label">證據 · Evidence</span>
+                    <ul class="ev-list">
+                      <li class="q">我以為點了下面就會（自動帶入）…Import 感覺好像是從 local 要上傳什麼東西的那種感覺。<span class="ev-quote-who">CSO-1</span></li>
+                    </ul>
+                  </div>
+                  <div class="reco-block">
+                    <div class="reco-label">建議 · recommendation</div>
+                    <ul>
+                      <li><b>即時帶入</b>：點選 dropdown 後下方 permission list 即時變動，移除多餘的 Import 步驟。</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+              <details class="pain-item">
+                <summary>
+                  <span class="pain-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  <span class="pain-text">「Show Config Only」不符合整體評估的使用情境，功能定位需重新釐清</span>
+                  <div class="pain-pills"><span class="pp hsinbo">CSO-1</span><span class="pp melen">CSO-2</span></div>
+                </summary>
+                <div class="pain-detail">
+                  <div class="pain-meta"><span class="meta-chip"><b>命中</b>50%</span><span class="severity-pill pill-p2">P2</span><span class="tag-spec-pill tag-pill-ux">UX</span></div>
+                  <div class="context-block">
+                    <span class="context-label">情境 / Context</span>
+                    「Show Config Only」定位是「暫時篩選、只看目前已勾選的項目」。但受測者指出，<strong>這是暫時性檢查輔助，並非整體評估的解決方案</strong>——使用者核心需求是確認「有沒有遺漏」，這個功能只能看到「已勾的部分」，<strong>無法幫助確認還有哪些應該勾但尚未勾選</strong>。CSO-2 指出比較適合在「Role 建立後回頭檢視 / 編輯」時使用。
+                  </div>
+                  <div class="ev-block">
+                    <span class="ev-label">證據 · Evidence</span>
+                    <ul class="ev-list">
+                      <li class="q">我原本以為它會去跟我上面剛剛選的 template 做 diff 比較…從 template 找到跟 template 的差異。<span class="ev-quote-who">CSO-1</span></li>
+                      <li class="q">試了幾次看不出來功能是什麼…可能因為是 toggle 樣式，沒有讓人覺得點擊後會篩選下方的資料。<span class="ev-quote-who">CSO-2</span></li>
+                    </ul>
+                  </div>
+                  <div class="reco-block">
+                    <div class="reco-label">建議 · recommendation</div>
+                    <ul>
+                      <li><b>視覺更換</b>：toggle → 篩選器 icon（funnel）或標準 chip filter。</li>
+                      <li><b>Wording 改寫</b>：「Show config only」→「Show only selected」。</li>
+                      <li><b>使用情境曝光</b>：在 edit role 流程中強化此功能曝光，初次設定階段可隱藏或降低視覺權重。</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- COLLAPSED: methodology -->
+      <details class="collapse-block">
+        <summary>
+          <svg class="chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          測試怎麼做的、受測者是誰、資料來源
+          <span class="hint">方法論與可信度說明 · 預設收合</span>
+        </summary>
+        <div class="collapse-body">
+          <div class="scope-grid">
+            <div class="scope-card">
+              <div class="scope-num">4</div>
+              <div>
+                <div class="scope-label">個測試任務</div>
+                <div class="scope-sub">情境 1 Topology PDF · 情境 2 第一線技術支援 · 情境 3 WiFi Admin Template · 情境 4 取消所有權限</div>
+              </div>
+            </div>
+            <div class="scope-card">
+              <div class="scope-num">4</div>
+              <div>
+                <div class="scope-label">位受測者</div>
+                <div class="scope-sub">IT-1 · IT-2（IT）／ CSO-1 · CSO-2（CSO）</div>
+              </div>
+            </div>
+          </div>
+          <div class="cred-block">
+            <div class="cred-card type-task">
+              <div class="cred-eyebrow"><span class="cred-eyebrow-dot"></span>任務來源 · Task Origin</div>
+              <h4>Task 2 &amp; 3 來自 MRD 中的真實客戶需求情境</h4>
+              <p style="font-size:13px; color:var(--ink-2); line-height:1.7;">情境 2（第一線技術支援）與情境 3（WiFi Admin Template 套用）皆取自 MRD 真實客戶場景，非研究者自行假設，直接以「客戶真正會做的事」驗證規格。</p>
+            </div>
+            <div class="cred-card type-participant">
+              <div class="cred-eyebrow"><span class="cred-eyebrow-dot"></span>受測者資格 · Participant Credibility</div>
+              <h4>4 位受測者均具備真實的 NCC 操作與權限管理經驗</h4>
+              <p style="font-size:13px; color:var(--ink-2); line-height:1.7;">CSO-1（NCC，4–7年）、CSO-2（NCC/CNC，5年）、IT-1（Nebula/Paloalto，10年）、IT-2（AD/Entra ID/UNIX，27年），4 人均有實際分配角色權限的日常工作職責。</p>
+            </div>
+          </div>
+          <div class="section-label" style="font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-3); margin-bottom:12px;">資料來源 · Sources</div>
+          <ul class="src-list">
+            <li><b>05/22 · IT-1</b> Zyxel IT · 10 年 — 摘要訪談記錄 + 測後問卷</li>
+            <li><b>05/25 · IT-2</b> IT · 27 年 — 完整逐字稿 (IT-2_20260526.md) + 測後問卷</li>
+            <li><b>05/26 · CSO-1</b> CSO · 4–7 年 — 完整逐字稿 (CSO-1_20260526.md) + 測後問卷</li>
+            <li><b>05/26 · CSO-2</b> CSO · 5 年 — 摘要訪談記錄 + 測後問卷</li>
+            <li><b>Spreadsheet</b> Custom Role 測試訪談（4 人摘要 cross-reference）</li>
+            <li><b>Survey CSV</b> Custom Role 功能 ── 使用者測試問卷 2.csv（4 位受測者有效回應；UX 同事 hsinyu.chen 為 pilot 測試，不列入研究）</li>
+          </ul>
+          <p style="font-size:13px; color:var(--ink-3); line-height:1.7; margin-top:14px;">分析方法：以「pain × participant」交叉確認 → severity 依命中數 + 任務阻斷程度 → 分類規則：需修改權限定義／分類規格者標 Spec；可透過 UI 用詞、位置、互動模式解決者標 UX；兩者皆需者標 Spec + UX。</p>
+        </div>
+      </details>
+
+      <div class="deck-footer">
+        Custom Role · 4-Participant Consolidated Usability Insights（結論導向版）· 2026/05/26
+      </div>
+    </div>
+  </body>
+</html>
