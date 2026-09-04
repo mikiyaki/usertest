@@ -1,0 +1,26 @@
+<svg width="32" height="30" viewBox="0 0 32 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Port / Type / NCC &#38; Device GUI">
+<g id="Type=Copper, State=Link Up, Indicator=HA, Speed=10Gbps, Selected=Yes">
+<g id="shape" clip-path="url(#clip0_746_15)">
+<path d="M2.13379 1H29.8662C30.4878 1 30.9999 1.50732 31 2.14258V27.8574C30.9998 28.4927 30.4878 29 29.8662 29H2.13379C1.51215 29 1.00015 28.4927 1 27.8574V2.14258C1.00015 1.50732 1.51215 1 2.13379 1Z" fill="#004FEE" stroke="#606060" stroke-width="2"/>
+<g id="Clip path group">
+<mask id="mask0_746_15" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="6" y="5" width="20" height="20">
+<g id="clip-path">
+<path id="Rectangle 12660" d="M26 5H6V25H26V5Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask0_746_15)">
+<g id="Mask Group 502">
+<path id="Path 38234" d="M9.21875 6.45706H11.5567V13.5161H20.4397V6.45605H22.7778V23.5421H20.4397V15.5521H11.5567V23.5421H9.21875V6.45706Z" fill="white"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_746_15">
+<rect width="32" height="30" fill="white"/>
+</clipPath>
+</defs>
+</svg>

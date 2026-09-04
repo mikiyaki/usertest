@@ -1,0 +1,9 @@
+<svg width="32" height="30" viewBox="0 0 32 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Port / Type / NCC &#38; Device GUI">
+<g id="Type=Fiber, State=Disabled, Indicator=None, Speed=N/A, Selected=Yes">
+<g id="shape">
+<path id="shape-bottom" d="M2 1H30C30.265 1 30.5194 1.10532 30.707 1.29297C30.8947 1.48059 31 1.7349 31 2V28C31 28.2651 30.8947 28.5194 30.707 28.707C30.5194 28.8947 30.265 29 30 29H23V26H9V29H2C1.73502 29 1.48065 28.8947 1.29297 28.707C1.10535 28.5194 1 28.2651 1 28V2C1 1.7349 1.10535 1.48059 1.29297 1.29297C1.48065 1.10532 1.73502 1 2 1Z" fill="white" stroke="#606060" stroke-width="2"/>
+</g>
+</g>
+</g>
+</svg>

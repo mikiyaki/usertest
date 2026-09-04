@@ -1,0 +1,14 @@
+<svg width="32" height="30" viewBox="0 0 32 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Port / Type / NCC &#38; Device GUI">
+<g id="Type=Copper, State=Link Up, Indicator=None, Speed=2.5Gbps, Selected=Yes">
+<g id="shape" clip-path="url(#clip0_746_15)">
+<path id="shape-bottom" d="M2.13379 1H29.8662C30.4878 1 30.9999 1.50732 31 2.14258V27.8574C30.9998 28.4927 30.4878 29 29.8662 29H2.13379C1.51215 29 1.00015 28.4927 1 27.8574V2.14258C1.00015 1.50732 1.51215 1 2.13379 1Z" fill="#00B2FF" stroke="#606060" stroke-width="2"/>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_746_15">
+<rect width="32" height="30" fill="white"/>
+</clipPath>
+</defs>
+</svg>

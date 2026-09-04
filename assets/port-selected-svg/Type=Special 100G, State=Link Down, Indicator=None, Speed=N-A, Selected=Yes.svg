@@ -1,0 +1,15 @@
+<svg width="96" height="68" viewBox="0 0 96 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Port / Type / NCC &#38; Device GUI">
+<g id="Type=Special 100G, State=Link Down, Indicator=None, Speed=N/A, Selected=Yes">
+<g id="shape" clip-path="url(#clip0_746_15)">
+<path id="shape-top" d="M2 1H94C94.2652 1 94.5195 1.10543 94.707 1.29297C94.8946 1.4805 95 1.73478 95 2V28C95 28.2652 94.8946 28.5195 94.707 28.707C94.5195 28.8946 94.2652 29 94 29H67V26H29V29H2C1.73478 29 1.48051 28.8946 1.29297 28.707C1.10543 28.5195 1 28.2652 1 28V2C1 1.73478 1.10543 1.48051 1.29297 1.29297C1.48051 1.10543 1.73478 1 2 1Z" fill="#DADADA" stroke="#606060" stroke-width="2"/>
+<path id="shape-bottom" d="M2 39H29V42H67V39H94C94.2652 39 94.5195 39.1054 94.707 39.293C94.8946 39.4805 95 39.7348 95 40V66C95 66.2652 94.8946 66.5195 94.707 66.707C94.5195 66.8946 94.2652 67 94 67H2C1.73478 67 1.48051 66.8946 1.29297 66.707C1.10543 66.5195 1 66.2652 1 66V40C1 39.7348 1.10543 39.4805 1.29297 39.293C1.48051 39.1054 1.73478 39 2 39Z" fill="#DADADA" stroke="#606060" stroke-width="2"/>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_746_15">
+<rect width="96" height="68" fill="white"/>
+</clipPath>
+</defs>
+</svg>

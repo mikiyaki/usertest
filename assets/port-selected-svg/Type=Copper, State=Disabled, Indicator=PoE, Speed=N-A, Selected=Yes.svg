@@ -1,0 +1,10 @@
+<svg width="32" height="30" viewBox="0 0 32 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Port / Type / NCC &#38; Device GUI">
+<g id="Type=Copper, State=Disabled, Indicator=PoE, Speed=N/A, Selected=Yes">
+<g id="shape">
+<path id="shape-bottom" d="M3 2H29C29.5523 2 30 2.44771 30 3V27C30 27.5523 29.5523 28 29 28H3C2.44771 28 2 27.5523 2 27V3C2 2.44772 2.44772 2 3 2Z" fill="white" stroke="#606060" stroke-width="2"/>
+<path id="Path 38144" d="M20 3L9 14L16 17L12 27L23 16L16 13L20 3Z" fill="#DADADA"/>
+</g>
+</g>
+</g>
+</svg>

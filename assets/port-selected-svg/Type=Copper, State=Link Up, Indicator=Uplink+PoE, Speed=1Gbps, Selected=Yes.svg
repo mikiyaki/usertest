@@ -1,0 +1,19 @@
+<svg width="32" height="30" viewBox="0 0 32 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Port / Type / NCC &#38; Device GUI">
+<g id="Type=Copper, State=Link Up, Indicator=Uplink+PoE, Speed=1Gbps, Selected=Yes">
+<g id="shape" clip-path="url(#clip0_746_15)">
+<path d="M2.13379 1H29.8662C30.4878 1 30.9999 1.50732 31 2.14258V27.8574C30.9998 28.4927 30.4878 29 29.8662 29H2.13379C1.51215 29 1.00015 28.4927 1 27.8574V2.14258C1.00015 1.50732 1.51215 1 2.13379 1Z" fill="#64BE00" stroke="#606060" stroke-width="2"/>
+<g id="Union">
+<path d="M22.2773 12.6182L21.8164 13.6289L20.373 16.7852L25.8564 18.8418L17.2402 26.3809L20.373 19.5264L14.8906 17.4707L23.5059 9.93164L22.2773 12.6182Z" fill="white"/>
+<path d="M20.7158 10.7783L14.1006 16.5674C13.7829 16.8454 13.6344 17.2702 13.71 17.6855C13.7856 18.1009 14.0736 18.4464 14.4688 18.5947L17.5879 19.7637V22.7344L17.583 22.7461H11.6992V13.6387H6.14355L14.6436 3.62109L20.7158 10.7783Z" fill="white"/>
+<path d="M23.1436 13.6387H23.1318L23.1348 13.6289L23.1436 13.6387Z" fill="white"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_746_15">
+<rect width="32" height="30" fill="white"/>
+</clipPath>
+</defs>
+</svg>

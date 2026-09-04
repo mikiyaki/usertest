@@ -1,0 +1,30 @@
+<svg width="301" height="18" viewBox="0 0 301 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1718_19)">
+<g clip-path="url(#clip1_1718_19)">
+<rect y="1" width="16" height="16" rx="2.5" fill="#767676"/>
+<path d="M4 9.92633L6.05499 12L12 6" stroke="white" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
+</g>
+<rect x="0.5" y="1.5" width="15" height="15" rx="2" stroke="#767676"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="24" y="13.7273">Option 1</tspan></text>
+<rect x="111.5" y="1.5" width="15" height="15" rx="2" fill="white"/>
+<rect x="111.5" y="1.5" width="15" height="15" rx="2" stroke="#767676"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="135" y="13.7273">Option 2</tspan></text>
+<g clip-path="url(#clip2_1718_19)">
+<rect x="224" y="1" width="16" height="16" rx="2.5" fill="#767676"/>
+<path d="M228 9.92633L230.055 12L236 6" stroke="white" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
+</g>
+<rect x="224.5" y="1.5" width="15" height="15" rx="2" stroke="#767676"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="248" y="13.7273">Option 3</tspan></text>
+</g>
+<defs>
+<clipPath id="clip0_1718_19">
+<rect width="301" height="18" fill="white"/>
+</clipPath>
+<clipPath id="clip1_1718_19">
+<rect y="1" width="16" height="16" rx="2.5" fill="white"/>
+</clipPath>
+<clipPath id="clip2_1718_19">
+<rect x="224" y="1" width="16" height="16" rx="2.5" fill="white"/>
+</clipPath>
+</defs>
+</svg>
